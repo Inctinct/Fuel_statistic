@@ -83,3 +83,19 @@ class RegistredUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class Car(models.Model):
+    user = models.ForeignKey(RegistredUser, on_delete=models.CASCADE)
+    number = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return self.number
+
+
+class CheckFuel(models.Model):
+    refueling = models.ForeignKey(Refueling, on_delete=models.SET_NULL)
+    fuel = models.ForeignKey(Fuel, on_delete=models.SET_NULL)
+    number_of_liters = models.PositiveIntegerField()
+    payment_date = models.DateTimeField(auto_now_add=True)
+    car = models.ForeignKey(Car, on_delete=models.SET_NULL)
